@@ -26,13 +26,11 @@ go run main.go
 ```
 Follow the on-screen prompts to select input file, mode (Cut/Mute), and time ranges.
 
-
 ### Cut Only
 Trim a video from 00:01:30 to 00:02:00:
 ```bash
 go run main.go -i input.mp4 -start 00:01:30 -end 00:02:00
 ```
-
 
 ### Mute Range
 Mute audio from 00:06:00 to 00:06:30:
@@ -46,10 +44,8 @@ go run main.go -i input.mp4 -mute-start 00:06:00 -mute-end 00:06:30
 | :--- | :--- | :--- |
 | `-i` | Input video file (Required) | |
 | `-o` | Output video file | `*_cleaned.mp4` |
-
 | `-start` | Start time (e.g., `10`, `00:01:30`) | |
 | `-end` | End time (e.g., `20`, `00:02:00`) | |
-
 | `-mute-start`| Start time to mute | |
 | `-mute-end`| End time to mute | |
 | `-crf` | Quality (lower is better) | `23` |
