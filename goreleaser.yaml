@@ -1,0 +1,87 @@
+version: 2
+project_name: vchopper
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - windows
+    goarch:
+      - amd64
+    binary: vchopper
+
+archives:
+  - format: zip
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files:
+      - README.md
+      - LICENSE
+      - setup_ffmpeg.ps1
+
+checksum:
+  name_template: 'checksums.txt'
+
+snapshot:
+  version_template: "{{ .Tag }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+
+scoop:
+  url_template: "https://github.com/sok97/Go_Vchopper/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+  bucket:
+    owner: sok97
+    name: scoop-bucket
+  commit_author:
+    name: goreleaserbot
+    email: bot@goreleaser.com
+  homepage: "https://github.com/sok97/Go_Vchopper"
+  description: "A lightweight video cutter and muter."
+  license: MIT
+
+chocolateys:
+  - name: vchopper
+    owners: sok97
+    title: Go Video Chopper
+    authors: sok97
+    project_url: "https://github.com/sok97/Go_Vchopper"
+    url_template: "https://github.com/sok97/Go_Vchopper/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+    icon_url: "https://github.com/sok97/Go_Vchopper/raw/main/icon.png" # Placeholder
+    copyright: "2025 sok97"
+    license_url: "https://github.com/sok97/Go_Vchopper/blob/main/LICENSE"
+    require_license_acceptance: false
+    project_source_url: "https://github.com/sok97/Go_Vchopper"
+    docs_url: "https://github.com/sok97/Go_Vchopper/blob/main/README.md"
+    bug_tracker_url: "https://github.com/sok97/Go_Vchopper/issues"
+    tags: "video ffmpeg cutter muter"
+    summary: "A lightweight video cutter and muter."
+    description: "A lightweight, high-performance video cutter and muter written in Go."
+    release_notes: "https://github.com/sok97/Go_Vchopper/releases/tag/{{ .Tag }}"
+    api_key: "{{ .Env.CHOCOLATEY_API_KEY }}"
+    source_repo: "https://push.chocolatey.org/"
+
+winget:
+  - name: vchopper
+    publisher: sok97
+    license: MIT
+    license_url: "https://github.com/sok97/Go_Vchopper/blob/main/LICENSE"
+    copyright: "2025 sok97"
+    homepage: "https://github.com/sok97/Go_Vchopper"
+    short_description: "A lightweight video cutter and muter."
+    url_template: "https://github.com/sok97/Go_Vchopper/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+    repository:
+      owner: sok97
+      name: winget-pkgs
+      branch: master
+      pull_request:
+        enabled: true
+        draft: false
+        base: master
